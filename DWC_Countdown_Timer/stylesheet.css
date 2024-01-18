@@ -1,0 +1,23 @@
+
+
+.timer-color-indicator {
+	/* position: relative; */
+	background-color: red;
+	border-radius: 50%;
+	border: none;
+	
+}
+
+.clock-left {
+	background-color: green;
+	border-radius: 50% 50% 0 0;
+	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+	transform: rotate(-90deg);
+}
+
+.clock-right {
+	background-color: yellow;
+	border-radius: 50% 50% 0 0;
+	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+	transform: rotate(90deg);
+}

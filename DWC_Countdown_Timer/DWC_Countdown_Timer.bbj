@@ -1,5 +1,44 @@
 REM /**
-REM  * DWC_Countdown_Timer.bbj
-REM  * @author bryanhighhill
-REM  *
+REM  * This app is a countdown timer created for the BASIS DWC, using BBj and CSS
+REM  *It accepts user input for hours, minutes, and seconds and after pressing start, will countdown to 00:00:00 by the second
 REM  */
+
+use java.nio.file
+
+sysgui = unt
+
+open (sysgui)"X0"
+bbj! = BBjAPI()
+sysgui! = bbj!.getSysGui()
+tc! = bbj!.getThinClient()
+
+title$ = "DWC Countdown Timer"
+
+transparent! = sysgui!.makeColor(250, 250, 250, 0)
+
+
+window! = sysgui!.addWindow(50,50,700,700,title$, $00010000$)
+window!.setCallback(window!.ON_CLOSE,"eoj")
+window!.addClass("window")
+
+timerColorIndicator! = window!.addChildWindow(1,50,50,600,600,"",$$,1,$$)
+timerColorIndicator!.addClass("timer-color-indicator")
+timerColorIndicator!.setBorderColor(transparent!)
+
+clockLeft! = timerColorIndicator!.addChildWindow(2,0,0,600,600,"",$$,2,$$)
+clockLeft!.addClass("clock-left")
+clockLeft!.setBorderColor(transparent!)
+
+clockRight! = timerColorIndicator!.addChildWindow(3,0,0,600,600,"",$$,3,$$)
+clockRight!.addClass("clock-right")
+clockRight!.setBorderColor(transparent!)
+
+cssFilePath! = dsk("") + dir("") + "stylesheet.css"
+print "cssFilePath: ", cssFilePath!
+css! = java.nio.file.Files.readAllBytes(java.nio.file.Path.of(cssFilePath!))
+BBjAPI().getWebManager().injectStyle(css!, 0, "id=my_custom_css") 
+
+process_events
+
+eoj:
+    release
