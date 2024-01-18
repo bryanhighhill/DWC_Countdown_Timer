@@ -25,15 +25,23 @@ timerColorIndicator! = window!.addChildWindow(1,50,50,600,600,"",$$,1,$$)
 timerColorIndicator!.addClass("timer-color-indicator")
 timerColorIndicator!.setBorderColor(transparent!)
 
-clockLeft! = timerColorIndicator!.addChildWindow(2,0,0,600,600,"",$$,2,$$)
-clockLeft!.addClass("clock-left")
-clockLeft!.setBorderColor(transparent!)
-clockLeft!.addClass("clock-rotate-start")
-
 clockRight! = timerColorIndicator!.addChildWindow(3,0,0,600,600,"",$$,3,$$)
 clockRight!.addClass("clock-right")
 clockRight!.setBorderColor(transparent!)
+rem 'add this class after 1/2 the time has passed'
 clockRight!.addClass("clock-rotate-end")
+
+REM clockLeftRed! = timerColorIndicator!.addChildWindow(2,0,0,600,600,"",$$,4,$$)
+REM clockLeft!.addClass("clock-left-red")
+REM clockLeft!.setBorderColor(transparent!)
+
+clockLeft! = timerColorIndicator!.addChildWindow(2,0,0,600,600,"",$$,2,$$)
+clockLeft!.addClass("clock-left")
+clockLeft!.setBorderColor(transparent!)
+rem 'add this class when user clicks on start timer'
+clockLeft!.addClass("clock-rotate-start")
+rem 'add this class after 1/2 the time has passed'
+REM clockLeft!.addClass("clock-left-change-color")
 
 cssFilePath! = dsk("") + dir("") + "stylesheet.css"
 print "cssFilePath: ", cssFilePath!

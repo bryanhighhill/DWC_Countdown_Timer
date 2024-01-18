@@ -23,16 +23,26 @@
 }
 
 .clock-rotate-start {
-	animation: rotate-left-start;
-	animation-duration: 30s;
+	animation: rotate-left-start, clock-left-change-color;
+	animation-duration: 10s, 0s;
+	animation-delay: 0s, 10s;
 	animation-timing-function: linear;
+	animation-fill-mode: none, forwards;
 }
 
+/* .clock-left-change-color {
+	animation: clock-left-change-color;
+	animation-delay: 10s;
+	animation-timing-function: linear;
+	animation-duration: 0s;
+}
+ */
 .clock-rotate-end {
 	animation: rotate-left-end;
-	animation-delay: 30s;
-	animation-duration: 30s;
+	animation-delay: 10s;
+	animation-duration: 10s;
 	animation-timing-function: linear;
+	animation-fill-mode: forwards;
 }
 
 
@@ -52,5 +62,13 @@
 	to {
 		transform: rotate(-90deg)
 	}
-	
+}
+
+@keyframes clock-left-change-color {
+	from {
+		background-color: green;
+	}
+	to {
+		background-color: red;	
+	}
 }
