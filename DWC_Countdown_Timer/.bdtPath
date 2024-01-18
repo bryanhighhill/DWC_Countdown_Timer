@@ -1,0 +1,2 @@
+#Thu Jan 18 08:07:30 MST 2024
+projectConfiguration={"environmentId"\:"BRE_CONTAINER","projectPrefix"\:"","enableProjectSpecificSettings"\:false,"doWriteOutputFiles"\:false,"outputFolderName"\:"bin","projectVersion"\:"23.5.0","deploymentDescriptor"\:"","properties"\:{},"compilerErrorLogging"\:false,"projectBuildLogging"\:true,"staticTypeChecking"\:false,"staticTypeWarnings"\:false,"defaultSourceOption"\:false,"maxParseSize"\:1048576}
