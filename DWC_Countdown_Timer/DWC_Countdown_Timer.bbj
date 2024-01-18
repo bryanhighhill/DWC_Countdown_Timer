@@ -28,10 +28,12 @@ timerColorIndicator!.setBorderColor(transparent!)
 clockLeft! = timerColorIndicator!.addChildWindow(2,0,0,600,600,"",$$,2,$$)
 clockLeft!.addClass("clock-left")
 clockLeft!.setBorderColor(transparent!)
+clockLeft!.addClass("clock-rotate-start")
 
 clockRight! = timerColorIndicator!.addChildWindow(3,0,0,600,600,"",$$,3,$$)
 clockRight!.addClass("clock-right")
 clockRight!.setBorderColor(transparent!)
+clockRight!.addClass("clock-rotate-end")
 
 cssFilePath! = dsk("") + dir("") + "stylesheet.css"
 print "cssFilePath: ", cssFilePath!

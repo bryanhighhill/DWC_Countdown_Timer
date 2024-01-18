@@ -21,3 +21,36 @@
 	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
 	transform: rotate(90deg);
 }
+
+.clock-rotate-start {
+	animation: rotate-left-start;
+	animation-duration: 30s;
+	animation-timing-function: linear;
+}
+
+.clock-rotate-end {
+	animation: rotate-left-end;
+	animation-delay: 30s;
+	animation-duration: 30s;
+	animation-timing-function: linear;
+}
+
+
+@keyframes rotate-left-start {
+	from {
+		transform: rotate(-90deg);
+	}
+	to {
+		transform: rotate(-270deg);
+	}
+}
+
+@keyframes rotate-left-end {
+	from {
+		transform: rotate(90deg)
+	}
+	to {
+		transform: rotate(-90deg)
+	}
+	
+}
