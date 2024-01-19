@@ -21,47 +21,78 @@ title$ = "DWC Countdown Timer"
 
 transparent! = sysgui!.makeColor(250, 250, 250, 0)
 
-window! = sysgui!.addWindow(50, 50, 700, 750, title$, $00010000$)
+window! = sysgui!.addWindow(50, 50, 702, 750, title$, $00010000$)
 window!.setCallback(window!.ON_CLOSE,"eoj")
 window!.addClass("window")
 
+
+rem ------------------------------------------------------------------------- 'buttons'
 rem 'use play button icon in button instead of the word "start"'
-startButton! = window!.addButton(5, 300, 680, 100, 50, "Start", $0020$)
+startButton! = window!.addButton(1, 301, 630, 100, 100, "Start", $0020$)
 startButton!.setCallback(startButton!.ON_BUTTON_PUSH, "startTimer")
+startButton!.setEnabled(0)
+if (startButton!.isEnabled() = 0) then 
+    startButton!.addClass("start-button-disabled")
+else
+    startButton!.addClass("start-button-enabled")
+endif
 
-rem ------------------------------------------------------------------------- 'time selection'
+rem 'resume button'
+resumeButton! = window!.addButton(2, 580, 630, 100, 100, "Resume", $0020$)
+resumeButton!.addClass("resume-button")
+resumeButton!.setCallback(resumeButton!.ON_BUTTON_PUSH, "resumeTimer")
+resumeButton!.setNoEdge(1)
+resumeButton!.setVisible(0)
+
+rem 'pause button'
+pauseButton! = window!.addButton(3, 580, 630, 100, 100, "Pause", $0020$)
+pauseButton!.addClass("pause-button")
+pauseButton!.setCallback(pauseButton!.ON_BUTTON_PUSH, "pauseTimer")
+pauseButton!.setNoEdge(1)
+pauseButton!.setVisible(0)
+
+rem 'cancel button'
+cancelButton! = window!.addButton(4, 20, 630, 100, 100, "Cancel", $0020$)
+cancelButton!.setCallback(cancelButton!.ON_BUTTON_PUSH, "cancelTimer")
+cancelButton!.addClass("cancel-button")
+cancelButton!.setNoEdge(1)
+cancelButton!.setVisible(0)
 
 
+rem ------------------------------------------------------------------------- 'inputs'
+rem 'window to contain inputs'
+inputBGWindow! = window!.addChildWindow(12, 100, 250, 502, 75, "", $$, 12, $$)
+inputBGWindow!.addClass("input-bg")
 
+hoursInputWindow! = inputBGWindow!.addChildWindow(13, 100, 250, 167, 75, "", $$, 13, $$)
+hoursInput! = hoursInputWindow!.addInputN(5, 100, 250, 167, 75, $0020$, "00")
+REM minutesInput! = inputWindow!.addInputN(6, $0020$, "00")
+REM secondsInput! = inputWindow!.addInputN(7, $0020$, "00")
 
+hoursInput!.addClass("time-input")
+REM minutesInput!.addClass("time-input")
+REM secondsInput!.addClass("time-input")
 
 
 
 process_events
 
 startTimer:
-    pauseButton! = window!.addButton(6, 580, 630, 100, 100, "Pause", $0020$)
-    pauseButton!.addClass("pause-button")
-REM     pauseButton!.removeClass(".control")
-    pauseButton!.setCallback(pauseButton!.ON_BUTTON_PUSH, "pauseTimer")
-    pauseButton!.setNoEdge(1)
-    
-    cancelButton! = window!.addButton(7, 20, 630, 100, 100, "Cancel", $0020$)
-    cancelButton!.setCallback(cancelButton!.ON_BUTTON_PUSH, "cancelTimer")
-    cancelButton!.addClass("cancel-button-enabled")
-    
     startButton!.setVisible(0)
-    timerColorIndicator! = window!.addChildWindow(1, 50, 50, 600, 600, "", $$, 1, $$)
+    pauseButton!.setVisible(1)
+    cancelButton!.setVisible(1)
+    
+    timerColorIndicator! = window!.addChildWindow(8, 50, 50, 600, 600, "", $$, 8, $$)
     timerColorIndicator!.addClass("timer-color-indicator")
     timerColorIndicator!.setBorderColor(transparent!)
     
-    clockRight! = timerColorIndicator!.addChildWindow(3, 0, 0, 600, 600, "", $$, 3, $$)
+    clockRight! = timerColorIndicator!.addChildWindow(9, 0, 0, 600, 600, "", $$, 9, $$)
     clockRight!.addClass("clock-right")
     clockRight!.setBorderColor(transparent!)
     rem 'add this class after 1/2 the time has passed'
     clockRight!.addClass("clock-rotate-end")
     
-    clockLeft! = timerColorIndicator!.addChildWindow(2, 0, 0, 600, 600, "", $$, 2, $$)
+    clockLeft! = timerColorIndicator!.addChildWindow(10, 0, 0, 600, 600, "", $$, 10, $$)
     clockLeft!.addClass("clock-left")
     clockLeft!.setBorderColor(transparent!)
     rem 'add this class when user clicks on start timer' - needs to feed user input to the css file
@@ -69,23 +100,36 @@ REM     pauseButton!.removeClass(".control")
     rem 'add this class after 1/2 the time has passed'
     REM clockLeft!.addClass("clock-left-change-color")
     
-    clockRight! = timerColorIndicator!.addChildWindow(4, 10, 10, 580, 580, "", $$, 4, $$)
+    clockRight! = timerColorIndicator!.addChildWindow(11, 10, 10, 580, 580, "", $$, 11, $$)
     clockRight!.addClass("clock-face")
     clockRight!.setBorderColor(transparent!)
 return
+REM 
+REM secondsInput% = 35
+REM 
+REM STR(secondsInput%)
+REM BBjApi().getWebManager().injectStyle(".classname: " + str(secondsInput%) + s; next variable
+
+
 
 pauseTimer:
-    pauseMessage = msgbox("you paused the timer", 0 + 64, "Pause timer")
-    rem 'code to pause timer'
+    pauseButton!.setVisible(0)
+    resumeButton!.setVisible(1)
     
-    
-    rem 'change pause button to resume button'
+    rem 'code to pause timer'    
+return
+
+resumeTimer:
+    pauseButton!.setVisible(1)
+    resumeButton!.setVisible(0)
 return
 
 cancelTimer:
-    cancelMessage = msgbox("you canceled the timer", 0 + 64, "Cancel timer")
-    rem 'code to cancel/reset timer and bring user back to original window'
-    rem 'test'
+    cancelButton!.setVisible(0)
+    if (pauseButton!.isVisible() = 1) then pauseButton!.setVisible(0)
+    if (resumeButton!.isVisible() = 1) then resumeButton!.setVisible(0)
+    startButton!.setVisible(1)
+    timerColorIndicator!.destroy()
 return
 
 eoj:
