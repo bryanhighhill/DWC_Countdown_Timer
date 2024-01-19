@@ -72,7 +72,7 @@ REM secondsInput! = inputWindow!.addInputN(7, $0020$, "00")
 hoursInput!.addClass("time-input")
 REM minutesInput!.addClass("time-input")
 REM secondsInput!.addClass("time-input")
-
+rem 'test'
 
 
 process_events
