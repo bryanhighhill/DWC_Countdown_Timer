@@ -85,6 +85,7 @@ return
 cancelTimer:
     cancelMessage = msgbox("you canceled the timer", 0 + 64, "Cancel timer")
     rem 'code to cancel/reset timer and bring user back to original window'
+    rem 'test'
 return
 
 eoj:
