@@ -1,22 +1,23 @@
-
-
 .timer-color-indicator {
-	/* position: relative; */
-	background-color: red;
+	background-color: yellow;
 	border-radius: 50%;
-	border: none;
-	
+	border: none;	
+}
+
+.clock-face {
+	background-color: black;
+	border-radius: 50%;
 }
 
 .clock-left {
-	background-color: green;
+	background-color: black;
 	border-radius: 50% 50% 0 0;
 	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
 	transform: rotate(-90deg);
 }
 
 .clock-right {
-	background-color: yellow;
+	background-color: black;
 	border-radius: 50% 50% 0 0;
 	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
 	transform: rotate(90deg);
@@ -66,9 +67,9 @@
 
 @keyframes clock-left-change-color {
 	from {
-		background-color: green;
+		background-color: black;
 	}
 	to {
-		background-color: red;	
+		background-color: yellow;	
 	}
 }

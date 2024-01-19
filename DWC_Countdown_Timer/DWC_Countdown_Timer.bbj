@@ -12,6 +12,11 @@ bbj! = BBjAPI()
 sysgui! = bbj!.getSysGui()
 tc! = bbj!.getThinClient()
 
+cssFilePath! = dsk("") + dir("") + "stylesheet.css"
+print "cssFilePath: ", cssFilePath!
+css! = java.nio.file.Files.readAllBytes(java.nio.file.Path.of(cssFilePath!))
+BBjAPI().getWebManager().injectStyle(css!, 0, "id=my_custom_css") 
+
 title$ = "DWC Countdown Timer"
 
 transparent! = sysgui!.makeColor(250, 250, 250, 0)
@@ -31,22 +36,17 @@ clockRight!.setBorderColor(transparent!)
 rem 'add this class after 1/2 the time has passed'
 clockRight!.addClass("clock-rotate-end")
 
-REM clockLeftRed! = timerColorIndicator!.addChildWindow(2,0,0,600,600,"",$$,4,$$)
-REM clockLeft!.addClass("clock-left-red")
-REM clockLeft!.setBorderColor(transparent!)
-
 clockLeft! = timerColorIndicator!.addChildWindow(2,0,0,600,600,"",$$,2,$$)
 clockLeft!.addClass("clock-left")
 clockLeft!.setBorderColor(transparent!)
-rem 'add this class when user clicks on start timer'
+rem 'add this class when user clicks on start timer' - needs to feed user input to the css file
 clockLeft!.addClass("clock-rotate-start")
 rem 'add this class after 1/2 the time has passed'
 REM clockLeft!.addClass("clock-left-change-color")
 
-cssFilePath! = dsk("") + dir("") + "stylesheet.css"
-print "cssFilePath: ", cssFilePath!
-css! = java.nio.file.Files.readAllBytes(java.nio.file.Path.of(cssFilePath!))
-BBjAPI().getWebManager().injectStyle(css!, 0, "id=my_custom_css") 
+clockRight! = timerColorIndicator!.addChildWindow(4,10,10,580,580,"",$$,4,$$)
+clockRight!.addClass("clock-face")
+clockRight!.setBorderColor(transparent!)
 
 process_events
 
