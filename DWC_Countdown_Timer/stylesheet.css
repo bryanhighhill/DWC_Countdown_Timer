@@ -16,13 +16,22 @@
 	display: inline;
 }
 
-
-
 .start-button-disabled::part(control) {
 	border-radius: 50%;
 	background-color: rgba(82, 255, 82, 0);
 	color: rgb(82, 255, 82);
 	font-size: 19px;
+}
+
+.start-button-enabled::part(control) {
+	border-radius: 50%;
+	color: rgb(82, 255, 82);
+	background-color: rgba(82, 255, 82, 0.2);
+	font-size: 19px;
+}
+
+.start-button-enabled::part(control):hover {
+	background-color: rgba(82, 255, 82, 0.4);
 }
 
 .pause-button::part(control) {

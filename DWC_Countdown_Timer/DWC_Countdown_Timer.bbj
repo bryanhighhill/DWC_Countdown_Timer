@@ -30,12 +30,13 @@ rem ------------------------------------------------------------------------- 'b
 rem 'use play button icon in button instead of the word "start"'
 startButton! = window!.addButton(1, 301, 630, 100, 100, "Start", $0020$)
 startButton!.setCallback(startButton!.ON_BUTTON_PUSH, "startTimer")
-startButton!.setEnabled(0)
-if (startButton!.isEnabled() = 0) then 
-    startButton!.addClass("start-button-disabled")
-else
+startButton!.setNoEdge(1)
+REM startButton!.setEnabled(0)
+REM if (startButton!.isEnabled() = 0) then 
+REM     startButton!.addClass("start-button-disabled")
+REM else
     startButton!.addClass("start-button-enabled")
-endif
+REM endif
 
 rem 'resume button'
 resumeButton! = window!.addButton(2, 580, 630, 100, 100, "Resume", $0020$)
