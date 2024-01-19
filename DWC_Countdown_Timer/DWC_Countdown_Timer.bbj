@@ -78,11 +78,13 @@ pauseTimer:
     pauseMessage = msgbox("you paused the timer", 0 + 64, "Pause timer")
     rem 'code to pause timer'
     
+    
     rem 'change pause button to resume button'
 return
 
 cancelTimer:
     cancelMessage = msgbox("you canceled the timer", 0 + 64, "Cancel timer")
+    rem 'code to cancel/reset timer and bring user back to original window'
 return
 
 eoj:
