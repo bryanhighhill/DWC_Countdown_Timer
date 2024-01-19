@@ -1,5 +1,9 @@
+.window {
+	background-color: black;
+}
+
 .timer-color-indicator {
-	background-color: yellow;
+	background-color: rgb(74, 74, 74);	
 	border-radius: 50%;
 	border: none;	
 }
@@ -10,14 +14,14 @@
 }
 
 .clock-left {
-	background-color: black;
+	background-color: rgb(247, 141, 42);
 	border-radius: 50% 50% 0 0;
 	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
 	transform: rotate(-90deg);
 }
 
 .clock-right {
-	background-color: black;
+	background-color: rgb(247, 141, 42);
 	border-radius: 50% 50% 0 0;
 	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
 	transform: rotate(90deg);
@@ -31,13 +35,7 @@
 	animation-fill-mode: none, forwards;
 }
 
-/* .clock-left-change-color {
-	animation: clock-left-change-color;
-	animation-delay: 10s;
-	animation-timing-function: linear;
-	animation-duration: 0s;
-}
- */
+
 .clock-rotate-end {
 	animation: rotate-left-end;
 	animation-delay: 10s;
@@ -70,6 +68,6 @@
 		background-color: black;
 	}
 	to {
-		background-color: yellow;	
+		background-color: rgb(74, 74, 74);	
 	}
 }
