@@ -11,6 +11,7 @@ open (sysgui)"X0"
 bbj! = BBjAPI()
 sysgui! = bbj!.getSysGui()
 tc! = bbj!.getThinClient()
+web! = bbj!.getWebManager()
 
 cssFilePath! = dsk("") + dir("") + "stylesheet.css"
 print "cssFilePath: ", cssFilePath!
@@ -118,11 +119,24 @@ pauseTimer:
     resumeButton!.setVisible(1)
     
     rem 'code to pause timer'    
+    
+    rem 'code to pause animation'
+    pauseAnimationStart! = ".clock-rotate-start { animation-play-state: paused !important; }"
+    pauseAnimationEnd! = ".clock-rotate-end { animation-play-state: paused !important; }"
+    web!.injectStyle(pauseAnimationStart!)
+    web!.injectStyle(pauseAnimationEnd!)
+    
 return
 
 resumeTimer:
     pauseButton!.setVisible(1)
     resumeButton!.setVisible(0)
+    
+    rem 'code to resume animation'
+    resumeAnimationStart! = ".clock-rotate-start { animation-play-state: running !important; }"
+    resumeAnimationEnd! = ".clock-rotate-end { animation-play-state: running !important; }"
+    web!.injectStyle(resumeAnimationStart!)
+    web!.injectStyle(resumeAnimationEnd!)
 return
 
 cancelTimer:
