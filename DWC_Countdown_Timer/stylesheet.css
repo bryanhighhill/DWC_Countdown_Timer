@@ -2,6 +2,17 @@
 	background-color: black;
 }
 
+.button.control.pause-button {
+	border-radius: 50% !important;
+	color: red;
+	background-color: red !important;
+	border: none;
+}
+
+.cancel-button-enabled {
+	border-radius: 50% !important;
+}
+
 .timer-color-indicator {
 	background-color: rgb(74, 74, 74);	
 	border-radius: 50%;
