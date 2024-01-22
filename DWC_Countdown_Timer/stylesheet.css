@@ -5,6 +5,29 @@
 .input-bg {
 	background-color: rgba(255, 255, 255, .15);
 	padding: 10px;
+	display: grid;
+	grid-auto-rows: 1fr;
+	grid-template-columns: 1fr 1fr 1fr;
+}
+
+.input-bg > * {
+	/* padding: 1rem; */
+	background-color: red;
+}
+
+.hours-input-window {
+	background-color: blue;
+}
+
+.minutes-input-window {
+	background-color: green;
+}
+
+.input-window {
+	/* width: calc(100% / 3); */
+	/* height: 100%; */
+	/* padding: 1rem */
+	background-color: red;
 }
 
 .time-input::part(input-wrapper) {
@@ -108,6 +131,14 @@
 	animation-duration: 10s;
 	animation-timing-function: linear;
 	animation-fill-mode: forwards;
+}
+
+.time-indicator {
+	color: white;
+	font-size: 95px;
+	text-align: center !important;
+	display: inline-block;
+	vertical-align: center !important;
 }
 
 

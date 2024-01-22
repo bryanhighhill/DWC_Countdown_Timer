@@ -28,16 +28,11 @@ window!.addClass("window")
 
 
 rem ------------------------------------------------------------------------- 'buttons'
-rem 'use play button icon in button instead of the word "start"'
+rem 'start button'
 startButton! = window!.addButton(1, 301, 630, 100, 100, "Start", $0020$)
 startButton!.setCallback(startButton!.ON_BUTTON_PUSH, "startTimer")
 startButton!.setNoEdge(1)
-REM startButton!.setEnabled(0)
-REM if (startButton!.isEnabled() = 0) then 
-REM     startButton!.addClass("start-button-disabled")
-REM else
-    startButton!.addClass("start-button-enabled")
-REM endif
+startButton!.addClass("start-button-enabled")
 
 rem 'resume button'
 resumeButton! = window!.addButton(2, 580, 630, 100, 100, "Resume", $0020$)
@@ -63,18 +58,23 @@ cancelButton!.setVisible(0)
 
 rem ------------------------------------------------------------------------- 'inputs'
 rem 'window to contain inputs'
-inputBGWindow! = window!.addChildWindow(12, 100, 250, 502, 75, "", $$, 12, $$)
-inputBGWindow!.addClass("input-bg")
+inputBG! = window!.addChildWindow(12, 100, 250, 502, 75, "", $$, 12, $$)
+inputBG!.addClass("input-bg")
 
-hoursInputWindow! = inputBGWindow!.addChildWindow(13, 100, 250, 167, 75, "", $$, 13, $$)
-hoursInput! = hoursInputWindow!.addInputN(5, 100, 250, 167, 75, $0020$, "00")
-REM minutesInput! = inputWindow!.addInputN(6, $0020$, "00")
-REM secondsInput! = inputWindow!.addInputN(7, $0020$, "00")
+REM hoursInput! = inputBG!.addInputN(13, $0020$)
+REM minutesInput! = inputBG!.addInputN(14, $0020$)
+ 
+hoursInputWindow! = inputBG!.addChildWindow(1)
+hoursInputWindow!.addClass("hours-input-window")
+REM hoursInput! = hoursInputWindow!.addInputN(13, $0020$)
+REM hoursInput!.addClass("input")
 
-hoursInput!.addClass("time-input")
-REM minutesInput!.addClass("time-input")
-REM secondsInput!.addClass("time-input")
-rem 'test'
+minutesInputWindow! = inputBG!.addChildWindow(2)
+minutesInputWindow!.addClass("minutes-input-window")
+REM 
+REM secondsInputWindow! = inputBG!.addChildWindow(3)
+REM secondsInputWindow!.addClass("input-window")
+
 
 
 process_events
@@ -102,10 +102,27 @@ startTimer:
     rem 'add this class after 1/2 the time has passed'
     REM clockLeft!.addClass("clock-left-change-color")
     
-    clockRight! = timerColorIndicator!.addChildWindow(11, 10, 10, 580, 580, "", $$, 11, $$)
-    clockRight!.addClass("clock-face")
-    clockRight!.setBorderColor(transparent!)
+    clockFace! = timerColorIndicator!.addChildWindow(11, 10, 10, 580, 580, "", $$, 11, $$)
+    clockFace!.addClass("clock-face")
+    clockFace!.setBorderColor(transparent!)
+    
+    hoursRemaining! = 02
+    minutesRemaining! = 45
+    secondsRemaining! = 36
+    rem 'if hours is > 0, display time format 00:00:00'
+    if (hoursRemaining! > 0) then timeRemaining! = STR(hoursRemaining!) + " : " + STR(minutesRemaining!) + " : " + STR(secondsRemaining!)
+    rem 'if minutes is > 0, display time format 00:00'
+    if (hoursRemaining! = 0 AND minutesRemaining! > 0) then timeRemaining! = STR(minutesRemaining!) + " : " + STR(secondsRemaining!)
+    rem 'if only seconds left, display time format :00'
+    if (hoursRemaining! = 0 AND minutesRemaining! = 0 AND secondsRemaining! > 0) then timeRemaining! = " : " + STR(secondsRemaining!)
+    
+    timeIndicator! = clockFace!.addStaticText(12, 0, 0, 580, 580, timeRemaining!)
+    timeIndicator!.addClass("time-indicator")
+    
+    
 return
+
+
 REM 
 REM secondsInput% = 35
 REM 
