@@ -1,42 +1,66 @@
 .window {
 	background-color: black;
+	/* display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative; */
+	padding: 10px;
+}
+
+.window .BBjPanel {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+/* 	position: relative; */
+	/* padding-left: 30px;
+	padding-right: 30px; */
 }
 
 .input-bg {
 	background-color: rgba(255, 255, 255, .15);
-	padding: 10px;
-	display: grid;
-	grid-auto-rows: 1fr;
-	grid-template-columns: 1fr 1fr 1fr;
+	display: inline-block;
+	border-radius: 15px;
+	padding: 30px;
 }
 
-.input-bg > * {
-	/* padding: 1rem; */
-	background-color: red;
+.time-window {
+	display: inline-block;
 }
 
-.hours-input-window {
-	background-color: blue;
-}
-
-.minutes-input-window {
-	background-color: green;
-}
-
-.input-window {
-	/* width: calc(100% / 3); */
-	/* height: 100%; */
-	/* padding: 1rem */
-	background-color: red;
-}
-
-.time-input::part(input-wrapper) {
-	/* background-color: rgba(255, 255, 255, .15); */
-	background-color: white;
+.input-spinner .BBjControl::part(input-wrapper) {
+	background-color: rgba(255, 255, 255, 0);
 	border: none;
+	font-size: 45px;
+	width: 200px;
+	color: rgb(179, 177, 177);
+}
+
+.input::part(input-wrapper) {
+	background-color: rgba(255, 255, 255, 0);
+	border: none;
+	font-size: 45px;
+	width: 200px;
+	color: rgb(179, 177, 177);
+}
+
+.input-label {
 	color: white;
-	text-align: center;
-	display: inline;
+	font-size: 20px;
+	font-weight: 600;
+	text-align: center !important;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+ 
+.button-window {
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	padding-bottom: 20px;
 }
 
 .start-button-disabled::part(control) {
@@ -51,6 +75,9 @@
 	color: rgb(82, 255, 82);
 	background-color: rgba(82, 255, 82, 0.2);
 	font-size: 19px;
+	aspect-ratio: 1 / 1;
+	width: 100%;
+	padding: 20px;
 }
 
 .start-button-enabled::part(control):hover {
@@ -134,11 +161,12 @@
 }
 
 .time-indicator {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	color: white;
-	font-size: 95px;
-	text-align: center !important;
-	display: inline-block;
-	vertical-align: center !important;
+	font-size: 100px;
+	font-weight: 200;
 }
 
 

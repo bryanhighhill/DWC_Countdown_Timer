@@ -22,58 +22,80 @@ title$ = "DWC Countdown Timer"
 
 transparent! = sysgui!.makeColor(250, 250, 250, 0)
 
-window! = sysgui!.addWindow(50, 50, 702, 750, title$, $00010000$)
+window! = sysgui!.addWindow(title$, $01111000$)
 window!.setCallback(window!.ON_CLOSE,"eoj")
 window!.addClass("window")
 
 
+
+rem ------------------------------------------------------------------------- 'inputs'
+rem 'window to contain inputs'
+inputBG! = window!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
+inputBG!.addClass("input-bg")
+
+
+hoursInput! = inputBG!.addInputNSpinner($0020$, "#00", $10$, 00, 00, 0, 23)
+hoursInput!.addClass("input-spinner")
+hours! = "hours"
+hoursText! = inputBG!.addStaticText(hours!)
+hoursText!.addClass("input-label")
+
+
+minutesInput! = inputBG!.addInputNSpinner($0020$, "#00", $10$, 00, 00, 0, 59)
+REM minutesWindow!.addClass("time-window")
+REM minutesInput!.addClass("input")
+minutesInput!.addClass("input-spinner")
+min! = "min"
+minText! = inputBG!.addStaticText(min!)
+minText!.addClass("input-label")
+
+REM secondsWindow! = inputBG!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
+REM secondsInput! = inputBG!.addInputN(15, $0020$, "#00", $10$, 00, 00)
+secondsInput! = inputBG!.addInputNSpinner($0020$, "#00", $10$, 00, 00, 0, 59)
+REM secondsWindow!.addClass("time-window")
+REM secondsInput!.addClass("input")
+secondsInput!.addClass("input-spinner")
+sec! = "sec"
+secText! = inputBG!.addStaticText(sec!)
+secText!.addClass("input-label")
+
+if (hoursInput!.getValue() = null) then hoursInput!.setValue(00)
+
+
+
 rem ------------------------------------------------------------------------- 'buttons'
+
+buttonWindow! = window!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
+buttonWindow!.addClass("button-window")
+
 rem 'start button'
-startButton! = window!.addButton(1, 301, 630, 100, 100, "Start", $0020$)
+startButton! = buttonWindow!.addButton("Start")
 startButton!.setCallback(startButton!.ON_BUTTON_PUSH, "startTimer")
 startButton!.setNoEdge(1)
 startButton!.addClass("start-button-enabled")
 
 rem 'resume button'
-resumeButton! = window!.addButton(2, 580, 630, 100, 100, "Resume", $0020$)
+resumeButton! = buttonWindow!.addButton("Resume", $0020$)
 resumeButton!.addClass("resume-button")
 resumeButton!.setCallback(resumeButton!.ON_BUTTON_PUSH, "resumeTimer")
 resumeButton!.setNoEdge(1)
 resumeButton!.setVisible(0)
 
 rem 'pause button'
-pauseButton! = window!.addButton(3, 580, 630, 100, 100, "Pause", $0020$)
+pauseButton! = buttonWindow!.addButton("Pause", $0020$)
 pauseButton!.addClass("pause-button")
 pauseButton!.setCallback(pauseButton!.ON_BUTTON_PUSH, "pauseTimer")
 pauseButton!.setNoEdge(1)
 pauseButton!.setVisible(0)
 
 rem 'cancel button'
-cancelButton! = window!.addButton(4, 20, 630, 100, 100, "Cancel", $0020$)
+cancelButton! = buttonWindow!.addButton("Cancel", $0020$)
 cancelButton!.setCallback(cancelButton!.ON_BUTTON_PUSH, "cancelTimer")
 cancelButton!.addClass("cancel-button")
 cancelButton!.setNoEdge(1)
 cancelButton!.setVisible(0)
 
 
-rem ------------------------------------------------------------------------- 'inputs'
-rem 'window to contain inputs'
-inputBG! = window!.addChildWindow(12, 100, 250, 502, 75, "", $$, 12, $$)
-inputBG!.addClass("input-bg")
-
-REM hoursInput! = inputBG!.addInputN(13, $0020$)
-REM minutesInput! = inputBG!.addInputN(14, $0020$)
- 
-hoursInputWindow! = inputBG!.addChildWindow(1)
-hoursInputWindow!.addClass("hours-input-window")
-REM hoursInput! = hoursInputWindow!.addInputN(13, $0020$)
-REM hoursInput!.addClass("input")
-
-minutesInputWindow! = inputBG!.addChildWindow(2)
-minutesInputWindow!.addClass("minutes-input-window")
-REM 
-REM secondsInputWindow! = inputBG!.addChildWindow(3)
-REM secondsInputWindow!.addClass("input-window")
 
 
 
@@ -107,7 +129,7 @@ startTimer:
     clockFace!.setBorderColor(transparent!)
     
     hoursRemaining! = 02
-    minutesRemaining! = 45
+    minutesRemaining! = 24
     secondsRemaining! = 36
     rem 'if hours is > 0, display time format 00:00:00'
     if (hoursRemaining! > 0) then timeRemaining! = STR(hoursRemaining!) + " : " + STR(minutesRemaining!) + " : " + STR(secondsRemaining!)
