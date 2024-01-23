@@ -160,17 +160,17 @@
 
 .clock-rotate-start {
 	animation: rotate-left-start, clock-left-change-color;
-	animation-delay: 0s, 10s;
+	/* animation-delay: 0s, 10s; */
 	/*could use css variable instead - using same structure as animation-duration --animation-duration; */
-	animation-duration: 10s, 0s;
+	/* animation-duration: 10s, 0s; */
 	animation-fill-mode: none, forwards;
 	animation-timing-function: linear;
 }
 
 .clock-rotate-end {
 	animation: rotate-left-end;
-	animation-delay: 10s;
-	animation-duration: 10s;
+	/* animation-delay: 10s;
+	animation-duration: 10s; */
 	animation-fill-mode: forwards;
 	animation-timing-function: linear;
 }
