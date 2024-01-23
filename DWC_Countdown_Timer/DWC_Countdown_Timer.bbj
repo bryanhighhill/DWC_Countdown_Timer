@@ -103,18 +103,20 @@ REM     timerColorIndicator!.addClass("timer-color-indicator")
 
 REM new version    
     clockContainer! = window!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
-    clockContainer!.addClass("clock-window")
+    clockContainer!.addClass("clock-container")
 
 REM new version
     timerColorIndicator! = clockContainer!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
     timerColorIndicator!.addClass("timer-color-indicator2")
-REM     timerColorIndicator!.setBorderColor(transparent!)
+REM     timerColorIndicator!.setBorderColor(transparent!) 
 
 
 REM original version     
 REM     clockRight! = timerColorIndicator!.addChildWindow(9, 0, 0, 600, 600, "", $$, 9, $$)
 REM     clockRight!.addClass("clock-right")
 
+REM clockWindow! = timerColorIndicator!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
+REM clockWindow!.addClass("clock-window")
 REM new version
     clockRight! = timerColorIndicator!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
     clockRight!.addClass("clock-right2")
@@ -135,24 +137,28 @@ REM new version
     rem 'add this class after 1/2 the time has passed'
     clockLeft!.addClass("clock-left-change-color")
     
-    
+REM original version    
 REM     clockFace! = timerColorIndicator!.addChildWindow(11, 10, 10, 580, 580, "", $$, 11, $$)
-REM REM     clockFace! = clockContainer!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
 REM     clockFace!.addClass("clock-face")
-REM     clockFace!.setBorderColor(transparent!)
-REM     
-REM     hoursRemaining! = 02
-REM     minutesRemaining! = 24
-REM     secondsRemaining! = 36
-REM     rem 'if hours is > 0, display time format 00:00:00'
-REM     if (hoursRemaining! > 0) then timeRemaining! = STR(hoursRemaining!) + " : " + STR(minutesRemaining!) + " : " + STR(secondsRemaining!)
-REM     rem 'if minutes is > 0, display time format 00:00'
-REM     if (hoursRemaining! = 0 AND minutesRemaining! > 0) then timeRemaining! = STR(minutesRemaining!) + " : " + STR(secondsRemaining!)
-REM     rem 'if only seconds left, display time format :00'
-REM     if (hoursRemaining! = 0 AND minutesRemaining! = 0 AND secondsRemaining! > 0) then timeRemaining! = " : " + STR(secondsRemaining!)
-REM     
-REM     timeIndicator! = clockFace!.addStaticText(12, 0, 0, 580, 580, timeRemaining!)
-REM     timeIndicator!.addClass("time-indicator")
+
+REM new version
+REM     clockFaceWindow! =
+    clockFace! = timerColorIndicator!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
+    clockFace!.addClass("clock-face2")
+     
+    hoursRemaining! = 02
+    minutesRemaining! = 24
+    secondsRemaining! = 36
+    
+    rem 'if hours is > 0, display time format 00:00:00'
+    if (hoursRemaining! > 0) then timeRemaining! = STR(hoursRemaining!) + " : " + STR(minutesRemaining!) + " : " + STR(secondsRemaining!)
+    rem 'if minutes is > 0, display time format 00:00'
+    if (hoursRemaining! = 0 AND minutesRemaining! > 0) then timeRemaining! = STR(minutesRemaining!) + " : " + STR(secondsRemaining!)
+    rem 'if only seconds left, display time format :00'
+    if (hoursRemaining! = 0 AND minutesRemaining! = 0 AND secondsRemaining! > 0) then timeRemaining! = " : " + STR(secondsRemaining!)
+    
+    timeIndicator! = clockFace!.addStaticText(12, 0, 0, 580, 580, timeRemaining!)
+    timeIndicator!.addClass("time-indicator")
     
     
 return
