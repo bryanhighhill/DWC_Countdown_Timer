@@ -1,10 +1,11 @@
+/* -------------------------------------------- main window */
 .window {
 	background-color: black;
 	/* display: flex;
 	align-items: center;
 	justify-content: center;
-	position: relative; */
-	padding: 10px;
+	position: relative;
+	padding: 10px; */
 }
 
 .window .BBjPanel {
@@ -13,11 +14,13 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-/* 	position: relative; */
-	/* padding-left: 30px;
+ /* 	position: relative;
+	padding-left: 30px;
 	padding-right: 30px; */
 }
 
+
+/* -------------------------------------------- inputs */
 .input-bg {
 	background-color: rgba(255, 255, 255, .15);
 	display: inline-block;
@@ -53,74 +56,117 @@
 	padding-left: 10px;
 	padding-right: 10px;
 }
- 
+
+
+/* -------------------------------------------- container for buttons */ 
 .button-window {
 	display: flex;
 	justify-content: center;
 	position: absolute;
 	width: 100%;
 	bottom: 0;
-	padding-bottom: 20px;
+	padding-bottom: 80px;
 }
 
-.start-button-disabled::part(control) {
+/* .start-button-disabled::part(control) {
 	border-radius: 50%;
 	background-color: rgba(82, 255, 82, 0);
 	color: rgb(82, 255, 82);
 	font-size: 19px;
-}
+} */
 
-.start-button-enabled::part(control) {
+/* -------------------------------------------- start button */
+.start-button::part(control) {
 	border-radius: 50%;
 	color: rgb(82, 255, 82);
 	background-color: rgba(82, 255, 82, 0.2);
 	font-size: 19px;
 	aspect-ratio: 1 / 1;
-	width: 100%;
-	padding: 20px;
+	width: 100px;
 }
 
-.start-button-enabled::part(control):hover {
+.start-button::part(control):hover {
 	background-color: rgba(82, 255, 82, 0.4);
 }
 
+/* -------------------------------------------- pause button */
 .pause-button::part(control) {
 	border-radius: 50%;
 	color: rgb(252, 163, 56);
 	background-color: rgba(252, 163, 56, 0.2);
 	font-size: 19px;
+	aspect-ratio: 1 / 1;
+	width: 100px;
+	margin-right: 50px;
 }
 
 .pause-button::part(control):hover {
 	background-color: rgba(252, 163, 56, 0.4);
 }
 
+/* -------------------------------------------- cancel button */
 .cancel-button::part(control) {
 	border-radius: 50%;
 	background-color: rgba(255, 255, 255, .15);	
 	color: rgb(255, 255, 255);
 	font-size: 19px;
+	aspect-ratio: 1 / 1;
+	width: 100px;
+	margin-left: 50px;
 }
 
 .cancel-button::part(control):hover {
 	background-color: rgba(255, 255, 255, 0.4);
 }
 
+/* -------------------------------------------- resume button */
 .resume-button::part(control) {
 	border-radius: 50%;
 	color: rgb(82, 255, 82);
 	background-color: rgba(82, 255, 82, 0.2);
 	font-size: 19px;
+	aspect-ratio: 1 / 1;
+	width: 100px;
+	margin-right: 50px;
 }
 
 .resume-button::part(control):hover {
 	background-color: rgba(82, 255, 82, 0.4);
 }
 
+
+/* -------------------------------------------- clock interface */
+
+/* -------------------------------------------- clock container */
+.clock-window {
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	width: 100%;
+	height: 70%;
+	top: 0;
+	margin-top: 50px;
+	margin-bottom: 30px;
+	
+}
+
+/* original version */
 .timer-color-indicator {
-	background-color: rgb(74, 74, 74);	
+	background-color: rgb(74, 74, 74);
 	border-radius: 50%;
 	border: none;	
+}
+
+/* new version */
+.timer-color-indicator2 {
+	background-color: rgb(74, 74, 74);
+	border: none;
+	border-radius: 50%;
+	aspect-ratio: 1 / 1;
+	min-width: 700px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .clock-face {
@@ -128,18 +174,43 @@
 	border-radius: 50%;
 }
 
-.clock-left {
-	background-color: rgb(252, 163, 56);
-	border-radius: 50% 50% 0 0;
-	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
-	transform: rotate(-90deg);
-}
 
-.clock-right {
+/* original version */
+/* .clock-right {
 	background-color: rgb(252, 163, 56);
 	border-radius: 50% 50% 0 0;
 	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
 	transform: rotate(90deg);
+} */
+
+/* new version */
+.clock-right2 {
+	background-color: rgb(252, 163, 56);
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	border-radius: 50% 50% 0 0;
+	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+	transform: rotate(90deg);
+}
+
+/* original version */
+/* .clock-left {
+	background-color: rgb(252, 163, 56);
+	border-radius: 50% 50% 0 0;
+	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+	transform: rotate(-90deg);
+} */
+
+/* new version */
+.clock-left2 {
+	position: absolute;
+	background-color: rgb(252, 163, 56);
+	width: 100%;	
+ 	aspect-ratio: 1 / 1;
+	border-radius: 50% 50% 0 0;
+	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+	transform: rotate(-90deg);
+	z-index: 10;
 }
 
 .clock-rotate-start {

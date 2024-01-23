@@ -40,20 +40,13 @@ hours! = "hours"
 hoursText! = inputBG!.addStaticText(hours!)
 hoursText!.addClass("input-label")
 
-
 minutesInput! = inputBG!.addInputNSpinner($0020$, "#00", $10$, 00, 00, 0, 59)
-REM minutesWindow!.addClass("time-window")
-REM minutesInput!.addClass("input")
 minutesInput!.addClass("input-spinner")
 min! = "min"
 minText! = inputBG!.addStaticText(min!)
 minText!.addClass("input-label")
 
-REM secondsWindow! = inputBG!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
-REM secondsInput! = inputBG!.addInputN(15, $0020$, "#00", $10$, 00, 00)
 secondsInput! = inputBG!.addInputNSpinner($0020$, "#00", $10$, 00, 00, 0, 59)
-REM secondsWindow!.addClass("time-window")
-REM secondsInput!.addClass("input")
 secondsInput!.addClass("input-spinner")
 sec! = "sec"
 secText! = inputBG!.addStaticText(sec!)
@@ -72,31 +65,28 @@ rem 'start button'
 startButton! = buttonWindow!.addButton("Start")
 startButton!.setCallback(startButton!.ON_BUTTON_PUSH, "startTimer")
 startButton!.setNoEdge(1)
-startButton!.addClass("start-button-enabled")
+startButton!.addClass("start-button")
 
 rem 'resume button'
-resumeButton! = buttonWindow!.addButton("Resume", $0020$)
-resumeButton!.addClass("resume-button")
+resumeButton! = buttonWindow!.addButton("Resume")
 resumeButton!.setCallback(resumeButton!.ON_BUTTON_PUSH, "resumeTimer")
 resumeButton!.setNoEdge(1)
+resumeButton!.addClass("resume-button")
 resumeButton!.setVisible(0)
 
 rem 'pause button'
-pauseButton! = buttonWindow!.addButton("Pause", $0020$)
-pauseButton!.addClass("pause-button")
+pauseButton! = buttonWindow!.addButton("Pause")
 pauseButton!.setCallback(pauseButton!.ON_BUTTON_PUSH, "pauseTimer")
 pauseButton!.setNoEdge(1)
+pauseButton!.addClass("pause-button")
 pauseButton!.setVisible(0)
 
 rem 'cancel button'
-cancelButton! = buttonWindow!.addButton("Cancel", $0020$)
+cancelButton! = buttonWindow!.addButton("Cancel")
 cancelButton!.setCallback(cancelButton!.ON_BUTTON_PUSH, "cancelTimer")
-cancelButton!.addClass("cancel-button")
 cancelButton!.setNoEdge(1)
+cancelButton!.addClass("cancel-button")
 cancelButton!.setVisible(0)
-
-
-
 
 
 process_events
@@ -105,41 +95,64 @@ startTimer:
     startButton!.setVisible(0)
     pauseButton!.setVisible(1)
     cancelButton!.setVisible(1)
+    inputBG!.setVisible(0)
     
-    timerColorIndicator! = window!.addChildWindow(8, 50, 50, 600, 600, "", $$, 8, $$)
-    timerColorIndicator!.addClass("timer-color-indicator")
-    timerColorIndicator!.setBorderColor(transparent!)
-    
-    clockRight! = timerColorIndicator!.addChildWindow(9, 0, 0, 600, 600, "", $$, 9, $$)
-    clockRight!.addClass("clock-right")
-    clockRight!.setBorderColor(transparent!)
+REM original version    
+REM     timerColorIndicator! = window!.addChildWindow(8, 50, 50, 600, 600, "", $$, 8, $$)
+REM     timerColorIndicator!.addClass("timer-color-indicator")
+
+REM new version    
+    clockContainer! = window!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
+    clockContainer!.addClass("clock-window")
+
+REM new version
+    timerColorIndicator! = clockContainer!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
+    timerColorIndicator!.addClass("timer-color-indicator2")
+REM     timerColorIndicator!.setBorderColor(transparent!)
+
+
+REM original version     
+REM     clockRight! = timerColorIndicator!.addChildWindow(9, 0, 0, 600, 600, "", $$, 9, $$)
+REM     clockRight!.addClass("clock-right")
+
+REM new version
+    clockRight! = timerColorIndicator!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
+    clockRight!.addClass("clock-right2")
     rem 'add this class after 1/2 the time has passed'
     clockRight!.addClass("clock-rotate-end")
-    
-    clockLeft! = timerColorIndicator!.addChildWindow(10, 0, 0, 600, 600, "", $$, 10, $$)
-    clockLeft!.addClass("clock-left")
+
+
+REM original version     
+REM     clockLeft! = timerColorIndicator!.addChildWindow(10, 0, 0, 600, 600, "", $$, 10, $$)
+REM     clockLeft!.addClass("clock-left")
+
+REM new version
+    clockLeft! = timerColorIndicator!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
     clockLeft!.setBorderColor(transparent!)
+    clockLeft!.addClass("clock-left2")
     rem 'add this class when user clicks on start timer' - needs to feed user input to the css file
     clockLeft!.addClass("clock-rotate-start")
     rem 'add this class after 1/2 the time has passed'
-    REM clockLeft!.addClass("clock-left-change-color")
+    clockLeft!.addClass("clock-left-change-color")
     
-    clockFace! = timerColorIndicator!.addChildWindow(11, 10, 10, 580, 580, "", $$, 11, $$)
-    clockFace!.addClass("clock-face")
-    clockFace!.setBorderColor(transparent!)
     
-    hoursRemaining! = 02
-    minutesRemaining! = 24
-    secondsRemaining! = 36
-    rem 'if hours is > 0, display time format 00:00:00'
-    if (hoursRemaining! > 0) then timeRemaining! = STR(hoursRemaining!) + " : " + STR(minutesRemaining!) + " : " + STR(secondsRemaining!)
-    rem 'if minutes is > 0, display time format 00:00'
-    if (hoursRemaining! = 0 AND minutesRemaining! > 0) then timeRemaining! = STR(minutesRemaining!) + " : " + STR(secondsRemaining!)
-    rem 'if only seconds left, display time format :00'
-    if (hoursRemaining! = 0 AND minutesRemaining! = 0 AND secondsRemaining! > 0) then timeRemaining! = " : " + STR(secondsRemaining!)
-    
-    timeIndicator! = clockFace!.addStaticText(12, 0, 0, 580, 580, timeRemaining!)
-    timeIndicator!.addClass("time-indicator")
+REM     clockFace! = timerColorIndicator!.addChildWindow(11, 10, 10, 580, 580, "", $$, 11, $$)
+REM REM     clockFace! = clockContainer!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
+REM     clockFace!.addClass("clock-face")
+REM     clockFace!.setBorderColor(transparent!)
+REM     
+REM     hoursRemaining! = 02
+REM     minutesRemaining! = 24
+REM     secondsRemaining! = 36
+REM     rem 'if hours is > 0, display time format 00:00:00'
+REM     if (hoursRemaining! > 0) then timeRemaining! = STR(hoursRemaining!) + " : " + STR(minutesRemaining!) + " : " + STR(secondsRemaining!)
+REM     rem 'if minutes is > 0, display time format 00:00'
+REM     if (hoursRemaining! = 0 AND minutesRemaining! > 0) then timeRemaining! = STR(minutesRemaining!) + " : " + STR(secondsRemaining!)
+REM     rem 'if only seconds left, display time format :00'
+REM     if (hoursRemaining! = 0 AND minutesRemaining! = 0 AND secondsRemaining! > 0) then timeRemaining! = " : " + STR(secondsRemaining!)
+REM     
+REM     timeIndicator! = clockFace!.addStaticText(12, 0, 0, 580, 580, timeRemaining!)
+REM     timeIndicator!.addClass("time-indicator")
     
     
 return
@@ -183,6 +196,7 @@ cancelTimer:
     if (pauseButton!.isVisible() = 1) then pauseButton!.setVisible(0)
     if (resumeButton!.isVisible() = 1) then resumeButton!.setVisible(0)
     startButton!.setVisible(1)
+    inputBG!.setVisible(1)
     timerColorIndicator!.destroy()
 return
 
