@@ -1,11 +1,6 @@
 /* -------------------------------------------- main window */
 .window {
 	background-color: black;
-	/* display: flex;
-	align-items: center;
-	justify-content: center;
-	position: relative;
-	padding: 10px; */
 }
 
 .window .BBjPanel {
@@ -14,74 +9,52 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
- /* 	position: relative;
-	padding-left: 30px;
-	padding-right: 30px; */
 }
 
 
 /* -------------------------------------------- inputs */
 .input-bg {
 	background-color: rgba(255, 255, 255, .15);
-	display: inline-block;
 	border-radius: 15px;
-	padding: 30px;
-}
-
-.time-window {
 	display: inline-block;
+	padding: 30px;
 }
 
 .input-spinner .BBjControl::part(input-wrapper) {
 	background-color: rgba(255, 255, 255, 0);
 	border: none;
+	color: rgb(179, 177, 177);
 	font-size: 45px;
 	width: 200px;
-	color: rgb(179, 177, 177);
-}
-
-.input::part(input-wrapper) {
-	background-color: rgba(255, 255, 255, 0);
-	border: none;
-	font-size: 45px;
-	width: 200px;
-	color: rgb(179, 177, 177);
 }
 
 .input-label {
 	color: white;
 	font-size: 20px;
 	font-weight: 600;
-	text-align: center !important;
 	padding-left: 10px;
 	padding-right: 10px;
+	text-align: center !important;
 }
 
 
-/* -------------------------------------------- container for buttons */ 
+/* -------------------------------------------- buttons */ 
 .button-window {
+	bottom: 0;
 	display: flex;
 	justify-content: center;
+	padding-bottom: 80px;
 	position: absolute;
 	width: 100%;
-	bottom: 0;
-	padding-bottom: 80px;
 }
 
-/* .start-button-disabled::part(control) {
-	border-radius: 50%;
-	background-color: rgba(82, 255, 82, 0);
-	color: rgb(82, 255, 82);
-	font-size: 19px;
-} */
-
-/* -------------------------------------------- start button */
+/* start */
 .start-button::part(control) {
+	aspect-ratio: 1 / 1;
+	background-color: rgba(82, 255, 82, 0.2);
 	border-radius: 50%;
 	color: rgb(82, 255, 82);
-	background-color: rgba(82, 255, 82, 0.2);
 	font-size: 19px;
-	aspect-ratio: 1 / 1;
 	width: 100px;
 }
 
@@ -89,45 +62,45 @@
 	background-color: rgba(82, 255, 82, 0.4);
 }
 
-/* -------------------------------------------- pause button */
+/* pause */
 .pause-button::part(control) {
+	aspect-ratio: 1 / 1;
+	background-color: rgba(252, 163, 56, 0.2);
 	border-radius: 50%;
 	color: rgb(252, 163, 56);
-	background-color: rgba(252, 163, 56, 0.2);
 	font-size: 19px;
-	aspect-ratio: 1 / 1;
-	width: 100px;
 	margin-right: 50px;
+	width: 100px;
 }
 
 .pause-button::part(control):hover {
 	background-color: rgba(252, 163, 56, 0.4);
 }
 
-/* -------------------------------------------- cancel button */
+/* cancel */
 .cancel-button::part(control) {
-	border-radius: 50%;
+	aspect-ratio: 1 / 1;
 	background-color: rgba(255, 255, 255, .15);	
+	border-radius: 50%;
 	color: rgb(255, 255, 255);
 	font-size: 19px;
-	aspect-ratio: 1 / 1;
-	width: 100px;
 	margin-left: 50px;
+	width: 100px;
 }
 
 .cancel-button::part(control):hover {
 	background-color: rgba(255, 255, 255, 0.4);
 }
 
-/* -------------------------------------------- resume button */
+/* resume */
 .resume-button::part(control) {
+	aspect-ratio: 1 / 1;
+	background-color: rgba(82, 255, 82, 0.2);
 	border-radius: 50%;
 	color: rgb(82, 255, 82);
-	background-color: rgba(82, 255, 82, 0.2);
 	font-size: 19px;
-	aspect-ratio: 1 / 1;
-	width: 100px;
 	margin-right: 50px;
+	width: 100px;
 }
 
 .resume-button::part(control):hover {
@@ -136,133 +109,92 @@
 
 
 /* -------------------------------------------- clock interface */
-
-/* -------------------------------------------- clock container */
 .clock-container {
 	display: flex;
-	justify-content: center;
-	position: absolute;
-	width: 100%;
 	height: 70%;
-	top: 0;
-	min-width: 690px; 
-	margin-top: 50px;
+	justify-content: center;
 	margin-bottom: 30px;
-	
+	margin-top: 50px;
+	min-width: 690px; 
+	position: absolute;
+	top: 0;
+	width: 100%;
 }
 
-/* original version */
-/* .timer-color-indicator {
-	background-color: rgb(74, 74, 74);
-	border-radius: 50%;
-	border: none;	
-} */
-
-/* new version */
-.timer-color-indicator2 {
+.timer-color-indicator {
+	align-items: center;
+	aspect-ratio: 1 / 1;
 	background-color: rgb(74, 74, 74);
  	border: none;
 	border-radius: 50%;
-	aspect-ratio: 1 / 1;
-	/* min-width: 700px; */
 	display: flex;
-	align-items: center;
 	justify-content: center;
 }
 
-/* original version */
-/* .clock-face {
-	background-color: black;
-	border-radius: 50%;
-} */
-
-/* new version */
-.clock-face2 {
-	background-color: black;
-	border-radius: 50%;
-	/* position: absolute; */
+.clock-face {
 	aspect-ratio: 1 / 1;
+	background-color: black;
+	border-radius: 50%;
 	width: 98%;
 }
 
-
-/* original version */
-/* .clock-right {
-	background-color: rgb(252, 163, 56);
-	border-radius: 50% 50% 0 0;
-	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
-	transform: rotate(90deg);
-} */
-
-/* new version */
-.clock-right2 {
-	position: absolute;
-	background-color: rgb(252, 163, 56);
-	width: 100%;
+.clock-right {
 	aspect-ratio: 1 / 1;
+	background-color: rgb(252, 163, 56);
 	border-radius: 50% 50% 0 0;
 	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+	position: absolute;
 	transform: rotate(90deg);
+	width: 100%;
 }
 
-/* original version */
-/* .clock-left {
-	background-color: rgb(252, 163, 56);
-	border-radius: 50% 50% 0 0;
-	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
-	transform: rotate(-90deg);
-} */
-
-/* new version */
-.clock-left2 {
-	position: absolute;
-	background-color: rgb(252, 163, 56);
-	width: 100%;	
+.clock-left {
  	aspect-ratio: 1 / 1;
+	background-color: rgb(252, 163, 56);
 	border-radius: 50% 50% 0 0;
 	clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+	position: absolute;
 	transform: rotate(-90deg);
+	width: 100%;	
 }
 
 .clock-rotate-start {
 	animation: rotate-left-start, clock-left-change-color;
-	animation-duration: 10s, 0s;
-	/*could use css variable instead - using same structure as animation-duration --animation-duration; */
 	animation-delay: 0s, 10s;
-	animation-timing-function: linear;
+	/*could use css variable instead - using same structure as animation-duration --animation-duration; */
+	animation-duration: 10s, 0s;
 	animation-fill-mode: none, forwards;
+	animation-timing-function: linear;
 }
-
 
 .clock-rotate-end {
 	animation: rotate-left-end;
 	animation-delay: 10s;
 	animation-duration: 10s;
-	animation-timing-function: linear;
 	animation-fill-mode: forwards;
+	animation-timing-function: linear;
 }
 
 .clock-window {
+	align-items: center;
+	aspect-ratio: 1 / 1;
 	background-color: rgb(74, 74, 74);
 	border: none;
 	border-radius: 50%;
-	aspect-ratio: 1 / 1;
-	min-width: 700px;
 	display: flex;
-	align-items: center;
+	min-width: 700px;
 	justify-content: center;
 }
 
 .time-indicator {
-	display: flex;
 	align-items: center;
-	justify-content: center;
+	aspect-ratio: 1 / 1;
 	color: white;
+	display: flex;
 	font-size: 100px;
 	font-weight: 200;
-	aspect-ratio: 1 / 1;
+	justify-content: center;
 }
-
 
 @keyframes rotate-left-start {
 	from {

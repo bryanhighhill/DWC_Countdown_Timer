@@ -96,55 +96,28 @@ startTimer:
     pauseButton!.setVisible(1)
     cancelButton!.setVisible(1)
     inputBG!.setVisible(0)
-    
-REM original version    
-REM     timerColorIndicator! = window!.addChildWindow(8, 50, 50, 600, 600, "", $$, 8, $$)
-REM     timerColorIndicator!.addClass("timer-color-indicator")
-
-REM new version    
+      
     clockContainer! = window!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
     clockContainer!.addClass("clock-container")
 
-REM new version
     timerColorIndicator! = clockContainer!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
-    timerColorIndicator!.addClass("timer-color-indicator2")
-REM     timerColorIndicator!.setBorderColor(transparent!) 
+    timerColorIndicator!.addClass("timer-color-indicator")
 
-
-REM original version     
-REM     clockRight! = timerColorIndicator!.addChildWindow(9, 0, 0, 600, 600, "", $$, 9, $$)
-REM     clockRight!.addClass("clock-right")
-
-REM clockWindow! = timerColorIndicator!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
-REM clockWindow!.addClass("clock-window")
-REM new version
     clockRight! = timerColorIndicator!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
-    clockRight!.addClass("clock-right2")
+    clockRight!.addClass("clock-right")
     rem 'add this class after 1/2 the time has passed'
     clockRight!.addClass("clock-rotate-end")
 
-
-REM original version     
-REM     clockLeft! = timerColorIndicator!.addChildWindow(10, 0, 0, 600, 600, "", $$, 10, $$)
-REM     clockLeft!.addClass("clock-left")
-
-REM new version
     clockLeft! = timerColorIndicator!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
     clockLeft!.setBorderColor(transparent!)
-    clockLeft!.addClass("clock-left2")
+    clockLeft!.addClass("clock-left")
     rem 'add this class when user clicks on start timer' - needs to feed user input to the css file
     clockLeft!.addClass("clock-rotate-start")
     rem 'add this class after 1/2 the time has passed'
     clockLeft!.addClass("clock-left-change-color")
     
-REM original version    
-REM     clockFace! = timerColorIndicator!.addChildWindow(11, 10, 10, 580, 580, "", $$, 11, $$)
-REM     clockFace!.addClass("clock-face")
-
-REM new version
-REM     clockFaceWindow! =
     clockFace! = timerColorIndicator!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
-    clockFace!.addClass("clock-face2")
+    clockFace!.addClass("clock-face")
      
     hoursRemaining! = 02
     minutesRemaining! = 24
