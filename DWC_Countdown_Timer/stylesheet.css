@@ -136,6 +136,7 @@
 	background-color: black;
 	border-radius: 50%;
 	width: 98%;
+	display: flex;
 }
 
 .clock-right {
@@ -175,7 +176,7 @@
 	animation-timing-function: linear;
 }
 
-.clock-window {
+/* .clock-window {
 	align-items: center;
 	aspect-ratio: 1 / 1;
 	background-color: rgb(74, 74, 74);
@@ -184,6 +185,13 @@
 	display: flex;
 	min-width: 700px;
 	justify-content: center;
+} */
+
+.time-indicator-window {
+/* 	background-color: red; */
+	aspect-ratio: 1 / 1;
+	align-items: center;
+	/* position: absolute; */
 }
 
 .time-indicator {
