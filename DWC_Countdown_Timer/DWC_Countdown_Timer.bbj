@@ -110,6 +110,23 @@ DEF FNConvertTime! (timeRemaining!)
     minutesInput!.setValue(minutesRemaining!)
     secondsInput!.setValue(secondsRemaining!)
     
+REM     'time variables for clock css animations'
+REM     totalTimeInSec! = timeRemaining! / 1000
+REM     halfTime! = totalTimeInSec! / 2
+REM     totalTimeString! = STR(totalTimeInSec!)
+REM     halfTimeString! = STR(halfTime!) 
+REM     
+REM     web!.injectStyle(".clock-rotate-end { "+
+REM :       "animation-delay: " + halfTimeString! + "s !important;"+
+REM :       "animation-duration: " + halfTimeString! + "s !important;"+
+REM :   "}")
+REM 
+REM     web!.injectStyle(".clock-rotate-start { "+
+REM :       "animation-delay: 0s, " + halfTimeString! + "s !important;"+
+REM :       "animation-duration: " + halfTimeString! + "s, 0s !important;"+
+REM :   "}")
+REM     
+
     RETURN timeRemaining!
 FNEND
 
@@ -123,8 +140,14 @@ startTimer:
     minutes! = minutesInput!.getValue()
     seconds! = secondsInput!.getValue()
     
+REM 'variables used for repeat timer function'
+    initialHours! = hours!
+    initialMinutes! = minutes!
+    initualSeconds! = seconds!
+    
     if (hours! = 0) AND (minutes! = 0) AND (seconds! = 0) then
         noInputMessage! = msgbox("No Time Selected", 0 + 48, "Start Timer Error")
+        return
     else
         if (startTime! = 0) then startTime! = TIM
         startButton!.setVisible(0)
@@ -133,7 +156,7 @@ startTimer:
         inputBG!.setVisible(0)
         
 REM     'time variables for clock css animations'
-        totalTimeInSec! = (hours! *  3600) + (minutes! * 60) + (seconds!) + 1
+        totalTimeInSec! = (hours! *  3600) + (minutes! * 60) + (seconds!)
         halfTime! = totalTimeInSec! / 2
         totalTimeString! = STR(totalTimeInSec!)
         halfTimeString! = STR(halfTime!) 
@@ -172,32 +195,55 @@ REM     'set one second timer to update time remaining'
     endif
     
 calculateTime:
-        if (timeWindowCreated! = 1) then timeIndicatorWindow!.destroy()
+    if (timeWindowCreated! = 1) then timeIndicatorWindow!.destroy()
+    timeWindowCreated! = 0
         
-        hours! = hoursInput!.getValue()
-        minutes! = minutesInput!.getValue()
-        seconds! = secondsInput!.getValue()
+    hours! = hoursInput!.getValue()
+    minutes! = minutesInput!.getValue()
+    seconds! = secondsInput!.getValue()
 
-REM     time variables for calculating remaining time
-        hoursToMS! = hours! * 3600000
-        minutesToMS! = minutes! * 60000
-        secondsToMS! = seconds! * 1000
-        totalTime! = hoursToMS! + minutesToMS! + secondsToMS!
-        timeRemaining! = totalTime!
-        currentTime! = startTime! * 3600000
-        futureTime! = totalTime! + currentTime!
+REM 'time variables for calculating remaining time'
+    hoursToMS! = hours! * 3600000
+    minutesToMS! = minutes! * 60000
+    secondsToMS! = seconds! * 1000
+    totalTime! = hoursToMS! + minutesToMS! + secondsToMS!
+    timeRemaining! = totalTime!
+    currentTime! = startTime! * 3600000
+    futureTime! = totalTime! + currentTime!
+    
+    if (hours! > 0) then timeRemainingString! = STR(hours!: "00") + " : " + STR(minutes!: "00") + " : " + STR(seconds!: "00")
+    if (hours! = 0) AND (minutes! > 0) then timeRemainingString! = STR(minutes!: "00") + " : " + STR(seconds!: "00")
+    if (hours! = 0) AND (minutes! = 0) AND (seconds! >= 0) then timeRemainingString! = " : " + STR(seconds!: "00")
+    
+REM 'when time is up'
+    if (hours! = 0) AND (minutes! = 0) AND (seconds! = 0) then 
+        bbj!.removeTimer(oneSecTimer)
         
-        if (hours! > 0) then timeRemainingString! = STR(hours!: "00") + " : " + STR(minutes!: "00") + " : " + STR(seconds!: "00")
-        if (hours! = 0) AND (minutes! > 0) then timeRemainingString! = STR(minutes!: "00") + " : " + STR(seconds!: "00")
-        if (hours! = 0) AND (minutes! = 0) AND (seconds! > 0) then timeRemainingString! = " : " + STR(seconds!: "00")
+REM 'Option to repeat timer or cancel out to start'
+
+REM         repeatTimer! = msgbox("Repeat Timer?", 4 + 32 + 0 + 0, "Time's Up!")
+REM         
+REM         rem 'yes'
+REM         if (repeatTimer!) = 6 then
+REM             hoursInput!.setValue(initialHours!)
+REM             minutesInput!.setValue(initialMinutes!)
+REM             secondsInput!.setValue(initialSeconds!)
+REM         endif
+REM         
+REM         rem 'no'
+REM         if (repeatTimer! = 7) then
+REM             i = msgbox("okay then")
+REM         endif
         
-        calculateTime! = FNConvertTime!(timeRemaining!) 
-        
-        timeIndicatorWindow! = clockFace!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
-        timeIndicatorWindow!.addClass("time-indicator-window")
-        timeIndicator! = timeIndicatorWindow!.addStaticText(timeRemainingString!)
-        timeIndicator!.addClass("time-indicator")
-        timeWindowCreated! = 1
+    endif
+    
+    calculateTime! = FNConvertTime!(timeRemaining!) 
+    
+    timeIndicatorWindow! = clockFace!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
+    timeIndicatorWindow!.addClass("time-indicator-window")
+    timeIndicator! = timeIndicatorWindow!.addStaticText(timeRemainingString!)
+    timeIndicator!.addClass("time-indicator")
+    timeWindowCreated! = 1
 
 return
 
