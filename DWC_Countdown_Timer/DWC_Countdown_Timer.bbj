@@ -133,7 +133,7 @@ startTimer:
         inputBG!.setVisible(0)
         
 REM     'time variables for clock css animations'
-        totalTimeInSec! = (hours! *  3600) + (minutes! * 60) + (seconds!)
+        totalTimeInSec! = (hours! *  3600) + (minutes! * 60) + (seconds!) + 1
         halfTime! = totalTimeInSec! / 2
         totalTimeString! = STR(totalTimeInSec!)
         halfTimeString! = STR(halfTime!) 
