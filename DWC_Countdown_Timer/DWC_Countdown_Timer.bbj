@@ -85,91 +85,60 @@ cancelButton!.addClass("cancel-button")
 cancelButton!.setVisible(0)
 
 
-rem ----------------------------------------------------------------------- 'user functions'
-REM DEF FNConvertTime! (timeRemaining!) 
-REM     timeRemaining! = timeRemaining! - 1000
-REM     currentTime! = currentTime! + 1000
-REM       
-REM     seconds! = INT(timeRemaining! / 1000)
-REM     minutes! = INT(seconds! / 60)
-REM     hoursRemaining! = INT(minutes! / 60)
-REM       
-REM     if seconds! >= 60 then 
-REM         secondsRemaining! = MOD(seconds!, 60)
-REM     else
-REM         secondsRemaining! = seconds!
-REM     endif
-REM       
-REM     if minutes! >= 60 then 
-REM         minutesRemaining! = MOD(minutes!, 60)
-REM     else
-REM         minutesRemaining! = minutes!
-REM     endif
-REM       
-REM     hoursInput!.setValue(hoursRemaining!)
-REM     minutesInput!.setValue(minutesRemaining!)
-REM     secondsInput!.setValue(secondsRemaining!)
-REM     
-REM     
-REM     if (hoursRemaining! > 0) then timeRemainingString! = STR(hoursRemaining!) + " : " + STR(minutesRemaining!) + " : " + STR(secondsRemaining!)
-REM     if (hoursRemaining! = 0) AND (minutesRemaining! > 0) then timeRemainingString! = STR(minutesRemaining!) + " : " + STR(secondsRemaining!)
-REM     if (hoursRemaining! = 0) AND (minutesRemaining! = 0) AND (secondsRemaining! > 0) then timeRemainingString! = " : " + STR(secondsRemaining!)
-REM     
-REM     timeIndicatorWindow! = clockFace!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
-REM     timeIndicatorWindow!.addClass("time-indicator-window")
-REM     timeIndicator! = timeIndicatorWindow!.addStaticText(timeRemainingString!)
-REM     timeIndicator!.addClass("time-indicator")
-REM     
-REM     RETURN timeRemainingString!
-REM FNEND
+rem ----------------------------------------------------------------------- 'calculate time function'
+DEF FNConvertTime! (timeRemaining!) 
+    timeRemaining! = timeRemaining! - 1000
+    currentTime! = currentTime! + 1000
+      
+    seconds! = INT(timeRemaining! / 1000)
+    minutes! = INT(seconds! / 60)
+    hoursRemaining! = INT(minutes! / 60)
+      
+    if seconds! >= 60 then 
+        secondsRemaining! = MOD(seconds!, 60)
+    else
+        secondsRemaining! = seconds!
+    endif
+      
+    if minutes! >= 60 then 
+        minutesRemaining! = MOD(minutes!, 60)
+    else
+        minutesRemaining! = minutes!
+    endif
+      
+    hoursInput!.setValue(hoursRemaining!)
+    minutesInput!.setValue(minutesRemaining!)
+    secondsInput!.setValue(secondsRemaining!)
+    
+    RETURN timeRemaining!
+FNEND
 
 startTime! = 0
+timeWindowCreated! = 0
 
 process_events
 
 startTimer: 
+    hours! = hoursInput!.getValue()
+    minutes! = minutesInput!.getValue()
+    seconds! = secondsInput!.getValue()
+    
+    if (hours! = 0) AND (minutes! = 0) AND (seconds! = 0) then
+        noInputMessage! = msgbox("No Time Selected", 0 + 48, "Start Timer Error")
+    else
+        if (startTime! = 0) then startTime! = TIM
         startButton!.setVisible(0)
         pauseButton!.setVisible(1)
         cancelButton!.setVisible(1)
         inputBG!.setVisible(0)
         
-        hours! = hoursInput!.getValue()
-        minutes! = minutesInput!.getValue()
-        seconds! = secondsInput!.getValue()
-        
-REM         if (hours! < 10) then hours! = "0" + hours!
-REM         if (minutes! < 10) then minutes! = "0" + minutes!
-REM         if (seconds! < 10) then seconds! = "0" + seconds!
-       
-        
-REM     time variables for clock css animations
+REM     'time variables for clock css animations'
         totalTimeInSec! = (hours! *  3600) + (minutes! * 60) + (seconds!)
         halfTime! = totalTimeInSec! / 2
         totalTimeString! = STR(totalTimeInSec!)
         halfTimeString! = STR(halfTime!) 
 
-REM     time variables for calculating remaining time
-        hoursToMS! = hours! * 3600000
-        minutesToMS! = minutes! * 60000
-        secondsToMS! = seconds! * 1000
-        totalTime! = hoursToMS! + minutesToMS! + secondsToMS!
-        timeRemaining! = totalTime!
-        currentTime! = startTime! * 3600000
-        futureTime! = totalTime! + currentTime!
-        
-        if (hours! > 0) then timeRemainingString! = STR(hours!: "00") + " : " + STR(minutes!: "00") + " : " + STR(seconds!: "00")
-        if (hours! = 0) AND (minutes! > 0) then timeRemainingString! = STR(minutes!: "00") + " : " + STR(seconds!: "00")
-        if (hours! = 0) AND (minutes! = 0) AND (seconds! > 0) then timeRemainingString! = " : " + STR(seconds!: "00")
-REM calculateTime! = FNConvertTime!(timeRemaining!)
-   
-REM         if (hours! > 0) OR (minutes! > 0) OR (seconds! > 0) then
-REM             if (startTime! = 0) then startTime! = TIM
-REM             bbj!.createTimer(oneSecTimer, 1, "calculateTime")
-REM         else
-REM             noInputMessage! = msgBox("Please enter your desired time", 0 + 48, "Start timer")
-REM         endif
-        
-REM         UI
+REM     'UI'
         clockContainer! = window!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
         clockContainer!.addClass("clock-container")
     
@@ -196,13 +165,40 @@ REM         UI
         
         clockFace! = timerColorIndicator!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
         clockFace!.addClass("clock-face")
-       
+        
+REM     'set one second timer to update time remaining'
+        bbj!.createTimer(oneSecTimer, 1, "calculateTime")
+        
+    endif
+    
+calculateTime:
+        if (timeWindowCreated! = 1) then timeIndicatorWindow!.destroy()
+        
+        hours! = hoursInput!.getValue()
+        minutes! = minutesInput!.getValue()
+        seconds! = secondsInput!.getValue()
+
+REM     time variables for calculating remaining time
+        hoursToMS! = hours! * 3600000
+        minutesToMS! = minutes! * 60000
+        secondsToMS! = seconds! * 1000
+        totalTime! = hoursToMS! + minutesToMS! + secondsToMS!
+        timeRemaining! = totalTime!
+        currentTime! = startTime! * 3600000
+        futureTime! = totalTime! + currentTime!
+        
+        if (hours! > 0) then timeRemainingString! = STR(hours!: "00") + " : " + STR(minutes!: "00") + " : " + STR(seconds!: "00")
+        if (hours! = 0) AND (minutes! > 0) then timeRemainingString! = STR(minutes!: "00") + " : " + STR(seconds!: "00")
+        if (hours! = 0) AND (minutes! = 0) AND (seconds! > 0) then timeRemainingString! = " : " + STR(seconds!: "00")
+        
+        calculateTime! = FNConvertTime!(timeRemaining!) 
+        
         timeIndicatorWindow! = clockFace!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
         timeIndicatorWindow!.addClass("time-indicator-window")
         timeIndicator! = timeIndicatorWindow!.addStaticText(timeRemainingString!)
         timeIndicator!.addClass("time-indicator")
+        timeWindowCreated! = 1
 
-        
 return
 
 pauseTimer:
@@ -214,6 +210,9 @@ pauseTimer:
     pauseAnimationEnd! = ".clock-rotate-end { animation-play-state: paused !important; }"
     web!.injectStyle(pauseAnimationStart!)
     web!.injectStyle(pauseAnimationEnd!)
+
+    rem 'pause timer'
+    bbj!.removeTimer(oneSecTimer)   
     
 return
 
@@ -226,6 +225,9 @@ resumeTimer:
     resumeAnimationEnd! = ".clock-rotate-end { animation-play-state: running !important; }"
     web!.injectStyle(resumeAnimationStart!)
     web!.injectStyle(resumeAnimationEnd!)
+    
+    rem 'resume timer'
+    bbj!.createTimer(oneSecTimer, 1, "calculateTime")
     
 return
 
