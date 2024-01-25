@@ -133,6 +133,13 @@ FNEND
 startTime! = 0
 timeWindowCreated! = 0
 
+REM 'variables used for repeat timer function'
+REM initialHours! = 0
+REM initialMinutes! = 0
+REM initialSeconds! = 0
+REM 
+REM initialTimeString! = STR(initialHours!) + ":" + STR(initialMinutes!) + ":" + STR(initialSeconds!)
+
 process_events
 
 startTimer: 
@@ -140,10 +147,10 @@ startTimer:
     minutes! = minutesInput!.getValue()
     seconds! = secondsInput!.getValue()
     
-REM 'variables used for repeat timer function'
+    REM 'variables used for repeat timer function'
     initialHours! = hours!
     initialMinutes! = minutes!
-    initualSeconds! = seconds!
+    initialSeconds! = seconds!
     
     if (hours! = 0) AND (minutes! = 0) AND (seconds! = 0) then
         noInputMessage! = msgbox("No Time Selected", 0 + 48, "Start Timer Error")
@@ -202,7 +209,7 @@ calculateTime:
     minutes! = minutesInput!.getValue()
     seconds! = secondsInput!.getValue()
 
-REM 'time variables for calculating remaining time'
+    REM 'time variables for calculating remaining time'
     hoursToMS! = hours! * 3600000
     minutesToMS! = minutes! * 60000
     secondsToMS! = seconds! * 1000
@@ -215,25 +222,28 @@ REM 'time variables for calculating remaining time'
     if (hours! = 0) AND (minutes! > 0) then timeRemainingString! = STR(minutes!: "00") + " : " + STR(seconds!: "00")
     if (hours! = 0) AND (minutes! = 0) AND (seconds! >= 0) then timeRemainingString! = " : " + STR(seconds!: "00")
     
-REM 'when time is up'
+    REM 'when time is up'
     if (hours! = 0) AND (minutes! = 0) AND (seconds! = 0) then 
         bbj!.removeTimer(oneSecTimer)
-        
-REM 'Option to repeat timer or cancel out to start'
+        pauseButton!.setEnabled(0)
 
-REM         repeatTimer! = msgbox("Repeat Timer?", 4 + 32 + 0 + 0, "Time's Up!")
-REM         
-REM         rem 'yes'
-REM         if (repeatTimer!) = 6 then
-REM             hoursInput!.setValue(initialHours!)
-REM             minutesInput!.setValue(initialMinutes!)
-REM             secondsInput!.setValue(initialSeconds!)
-REM         endif
-REM         
-REM         rem 'no'
-REM         if (repeatTimer! = 7) then
-REM             i = msgbox("okay then")
-REM         endif
+    
+    REM 'Option to repeat timer or cancel out to start'
+        repeatTimer! = msgbox("Repeat Timer?", 4 + 32 + 0 + 0, "Time's Up!")
+        
+        rem 'yes'
+        if (repeatTimer!) = 6 then
+            hoursInput!.setValue(initialHours!)
+            minutesInput!.setValue(initialMinutes!)
+            secondsInput!.setValue(initialSeconds!)
+            GOTO startTimer
+REM              i = msgbox("initial time: " + STR(initialHours!) + ":" + STR(initialMinutes!) + ":" + STR(initialSeconds!))
+        endif
+        
+        rem 'no'
+        if (repeatTimer! = 7) then
+            i = msgbox("okay then")
+        endif
         
     endif
     
