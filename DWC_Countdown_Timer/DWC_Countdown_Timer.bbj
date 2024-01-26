@@ -211,8 +211,6 @@ calculateTime:
     REM 'when time is up'
     if (hours! = 0) AND (minutes! = 0) AND (seconds! = 0) then 
         bbj!.removeTimer(oneSecTimer)
-        pauseButton!.setEnabled(0)
-
     
         REM 'option to repeat timer or cancel and go back to start'
         repeatTimer! = msgbox("Repeat Timer?", 4 + 32 + 0 + 0, "Time's Up!")
