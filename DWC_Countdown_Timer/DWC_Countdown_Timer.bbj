@@ -12,7 +12,6 @@ sysgui = unt
 open (sysgui)"X0"
 bbj! = BBjAPI()
 sysgui! = bbj!.getSysGui()
-tc! = bbj!.getThinClient()
 web! = bbj!.getWebManager()
 
 cssFilePath! = dsk("") + dir("") + "stylesheet.css"
