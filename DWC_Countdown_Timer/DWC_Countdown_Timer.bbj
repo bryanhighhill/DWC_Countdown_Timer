@@ -1,6 +1,8 @@
 REM /**
 REM  * This app is a countdown timer created for the BASIS DWC, using BBj and CSS
 REM  *It accepts user input for hours, minutes, and seconds and after pressing start, will countdown to 00:00:00 by the second
+REM  * The user is then prompted to repeat timer or not. If repeat is confirmed the timer will start over with the original time input.
+REM  * If denied, the user is brought back to the beginning page of the app
 REM  */
 
 use java.nio.file
@@ -25,7 +27,6 @@ transparent! = sysgui!.makeColor(250, 250, 250, 0)
 window! = sysgui!.addWindow(title$, $01111000$)
 window!.setCallback(window!.ON_CLOSE,"eoj")
 window!.addClass("window")
-
 
 
 rem ------------------------------------------------------------------------- 'inputs'
@@ -109,23 +110,6 @@ DEF FNConvertTime! (timeRemaining!)
     hoursInput!.setValue(hoursRemaining!)
     minutesInput!.setValue(minutesRemaining!)
     secondsInput!.setValue(secondsRemaining!)
-    
-REM     'time variables for clock css animations'
-REM     totalTimeInSec! = timeRemaining! / 1000
-REM     halfTime! = totalTimeInSec! / 2
-REM     totalTimeString! = STR(totalTimeInSec!)
-REM     halfTimeString! = STR(halfTime!) 
-REM     
-REM     web!.injectStyle(".clock-rotate-end { "+
-REM :       "animation-delay: " + halfTimeString! + "s !important;"+
-REM :       "animation-duration: " + halfTimeString! + "s !important;"+
-REM :   "}")
-REM 
-REM     web!.injectStyle(".clock-rotate-start { "+
-REM :       "animation-delay: 0s, " + halfTimeString! + "s !important;"+
-REM :       "animation-duration: " + halfTimeString! + "s, 0s !important;"+
-REM :   "}")
-REM     
 
     RETURN timeRemaining!
 FNEND
@@ -133,14 +117,14 @@ FNEND
 startTime! = 0
 timeWindowCreated! = 0
 
-REM 'variables used for repeat timer function'
-REM initialHours! = 0
-REM initialMinutes! = 0
-REM initialSeconds! = 0
-REM 
-REM initialTimeString! = STR(initialHours!) + ":" + STR(initialMinutes!) + ":" + STR(initialSeconds!)
+REM 'set action when app ends - refresh page'
+REM '.urlAction() - constructs a BBjBuiUrlCloseAction object to load a specified URL'
+REM '.getUrl() - returns URL of current page'
+refresh! = web!.urlAction(web!.getUrl())
+web!.setEndAction(refresh!)
 
 process_events
+
 
 startTimer: 
     hours! = hoursInput!.getValue()
@@ -152,6 +136,7 @@ startTimer:
     initialMinutes! = minutes!
     initialSeconds! = seconds!
     
+    REM 'check to see if user inputted any time else start timer'
     if (hours! = 0) AND (minutes! = 0) AND (seconds! = 0) then
         noInputMessage! = msgbox("No Time Selected", 0 + 48, "Start Timer Error")
         return
@@ -162,13 +147,13 @@ startTimer:
         cancelButton!.setVisible(1)
         inputBG!.setVisible(0)
         
-REM     'time variables for clock css animations'
+        REM 'time variables for clock css animations'
         totalTimeInSec! = (hours! *  3600) + (minutes! * 60) + (seconds!)
         halfTime! = totalTimeInSec! / 2
         totalTimeString! = STR(totalTimeInSec!)
         halfTimeString! = STR(halfTime!) 
 
-REM     'UI'
+        REM 'UI'
         clockContainer! = window!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
         clockContainer!.addClass("clock-container")
     
@@ -196,11 +181,11 @@ REM     'UI'
         clockFace! = timerColorIndicator!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
         clockFace!.addClass("clock-face")
         
-REM     'set one second timer to update time remaining'
+        REM 'set one second timer to update time remaining'
         bbj!.createTimer(oneSecTimer, 1, "calculateTime")
-        
     endif
     
+
 calculateTime:
     if (timeWindowCreated! = 1) then timeIndicatorWindow!.destroy()
     timeWindowCreated! = 0
@@ -218,6 +203,7 @@ calculateTime:
     currentTime! = startTime! * 3600000
     futureTime! = totalTime! + currentTime!
     
+    REM 'format time for clock display'
     if (hours! > 0) then timeRemainingString! = STR(hours!: "00") + " : " + STR(minutes!: "00") + " : " + STR(seconds!: "00")
     if (hours! = 0) AND (minutes! > 0) then timeRemainingString! = STR(minutes!: "00") + " : " + STR(seconds!: "00")
     if (hours! = 0) AND (minutes! = 0) AND (seconds! >= 0) then timeRemainingString! = " : " + STR(seconds!: "00")
@@ -228,7 +214,7 @@ calculateTime:
         pauseButton!.setEnabled(0)
 
     
-    REM 'Option to repeat timer or cancel out to start'
+        REM 'option to repeat timer or cancel and go back to start'
         repeatTimer! = msgbox("Repeat Timer?", 4 + 32 + 0 + 0, "Time's Up!")
         
         rem 'yes'
@@ -237,18 +223,18 @@ calculateTime:
             minutesInput!.setValue(initialMinutes!)
             secondsInput!.setValue(initialSeconds!)
             GOTO startTimer
-REM              i = msgbox("initial time: " + STR(initialHours!) + ":" + STR(initialMinutes!) + ":" + STR(initialSeconds!))
         endif
         
         rem 'no'
         if (repeatTimer! = 7) then
-            i = msgbox("okay then")
-        endif
-        
+            GOTO eoj
+        endif  
     endif
     
+    REM 'call function to calculate time'
     calculateTime! = FNConvertTime!(timeRemaining!) 
     
+    REM 'display current remaining time'
     timeIndicatorWindow! = clockFace!.addChildWindow("", $00108800$, sysgui!.getAvailableContext())
     timeIndicatorWindow!.addClass("time-indicator-window")
     timeIndicator! = timeIndicatorWindow!.addStaticText(timeRemainingString!)
@@ -256,6 +242,7 @@ REM              i = msgbox("initial time: " + STR(initialHours!) + ":" + STR(in
     timeWindowCreated! = 1
 
 return
+
 
 pauseTimer:
     pauseButton!.setVisible(0)
@@ -272,6 +259,7 @@ pauseTimer:
     
 return
 
+
 resumeTimer:
     pauseButton!.setVisible(1)
     resumeButton!.setVisible(0)
@@ -287,36 +275,23 @@ resumeTimer:
     
 return
 
+
 cancelTimer:
-    cancelButton!.setVisible(0)
-    if (pauseButton!.isVisible() = 1) then pauseButton!.setVisible(0)
-    if (resumeButton!.isVisible() = 1) then resumeButton!.setVisible(0)
-    startButton!.setVisible(1)
-    inputBG!.setVisible(1)
-    timerColorIndicator!.destroy()
-    hoursInput!.setValue(00)
-    minutesInput!.setValue(00)
-    secondsInput!.setValue(00)
+REM 'option to repeat timer or cancel and go back to start'
+        cancelTimer! = msgbox("Are you sure you want to cancel timer?", 4 + 48 + 0 + 0, "Cancel Timer")       
+        
+        rem 'yes'
+        if (cancelTimer!) = 6 then
+            GOTO eoj
+        endif
+        
+        rem 'no'
+        if (cancelTimer! = 7) then
+            return
+        endif  
     
 return
 
-calculateTime:
 
-REM     hours! = hoursInput!.getValue()
-REM     minutes! = minutesInput!.getValue()
-REM     seconds! = secondsInput!.getValue()
-REM     
-REM     hoursToMS! = hours! * 3600000
-REM     minutesToMS! = minutes! * 60000
-REM     secondsToMS! = seconds! * 1000
-REM     
-REM     totalTime1! = hoursToMS! + minutesToMS! + secondsToMS!
-REM     timeRemaining! = totalTime!
-REM     currentTime! = startTime! * 3600000
-REM     futureTime! = totalTime! + currentTime!
-    
-REM     calculateTime! = FNConvertTime!(timeRemaining!)
-
-return
 eoj:
     release
