@@ -17,16 +17,16 @@ web! = bbj!.getWebManager()
 cssFilePath! = dsk("") + dir("") + "stylesheet.css"
 print "cssFilePath: ", cssFilePath!
 css! = java.nio.file.Files.readAllBytes(java.nio.file.Path.of(cssFilePath!))
-BBjAPI().getWebManager().injectStyle(css!, 0, "id=my_custom_css") 
+web!.injectStyle(css!, 0, "id=my_custom_css") 
 
 title$ = "DWC Countdown Timer"
 
-transparent! = sysgui!.makeColor(250, 250, 250, 0)
 
 window! = sysgui!.addWindow(title$, $01111000$)
 window!.setCallback(window!.ON_CLOSE,"eoj")
 window!.addClass("window")
 
+transparent! = sysgui!.makeColor(250, 250, 250, 0)
 
 rem ------------------------------------------------------------------------- 'inputs'
 rem 'window to contain inputs'
@@ -275,17 +275,17 @@ return
 
 cancelTimer:
 REM 'option to repeat timer or cancel and go back to start'
-        cancelTimer! = msgbox("Are you sure you want to cancel timer?", 4 + 48 + 0 + 0, "Cancel Timer")       
+    cancelTimer! = msgbox("Are you sure you want to cancel timer?", 4 + 48 + 0 + 0, "Cancel Timer")       
         
-        rem 'yes'
-        if (cancelTimer!) = 6 then
-            GOTO eoj
-        endif
+    rem 'yes'
+    if (cancelTimer!) = 6 then
+        GOTO eoj
+    endif
         
-        rem 'no'
-        if (cancelTimer! = 7) then
-            return
-        endif  
+    rem 'no'
+    if (cancelTimer! = 7) then
+        return
+    endif  
     
 return
 
