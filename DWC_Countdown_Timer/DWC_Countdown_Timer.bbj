@@ -94,13 +94,13 @@ DEF FNConvertTime! (timeRemaining!)
     minutes! = INT(seconds! / 60)
     hoursRemaining! = INT(minutes! / 60)
       
-    if seconds! >= 60 then 
+    if (seconds! >= 60) then 
         secondsRemaining! = MOD(seconds!, 60)
     else
         secondsRemaining! = seconds!
     endif
       
-    if minutes! >= 60 then 
+    if (minutes! >= 60) then 
         minutesRemaining! = MOD(minutes!, 60)
     else
         minutesRemaining! = minutes!
